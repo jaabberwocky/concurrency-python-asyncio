@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "concurrency-python-asyncio"
+version = "0.1.0"
+description = ""
+authors = ["tobias <tobias@tobias-leong.dev>"]
+readme = "README.md"
+packages = [{include = "concurrency_python_asyncio"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
