@@ -1,11 +1,13 @@
 import argparse
 import asyncio
 import random
+from utils import async_timed
 
 
+@async_timed()
 async def add_num(num1: int, num2: int) -> int:
     # dont use time.sleep as it blocks all execution
-    await asyncio.sleep(1)
+    await asyncio.sleep(random.randint(0, 3))
     return num1 + num2
 
 
@@ -35,4 +37,5 @@ if __name__ == '__main__':
                         help='an integer for the accumulator')
 
     args = parser.parse_args()
+    print(f"Runinng with {args.num_iterations} iterations...")
     asyncio.run(main())
