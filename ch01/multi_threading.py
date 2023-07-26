@@ -1,5 +1,5 @@
 import threading
-from utils import hello_from_thread, parse_and_return_args
+from common import hello_from_thread, parse_and_return_args
 
 
 if __name__ == '__main__':
