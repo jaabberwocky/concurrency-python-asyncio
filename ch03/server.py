@@ -1,26 +1,36 @@
+import selectors
 import socket
+from selectors import SelectorKey
+from typing import List, Tuple
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+selector = selectors.DefaultSelector()
+
+
+server_socket = socket.socket()
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-server_socket.bind(('localhost', 50000))
+
+server_address = ('127.0.0.1', 8000)
+server_socket.setblocking(False)
+server_socket.bind(server_address)
 server_socket.listen()
 
-BUFF_SIZE = 20
+selector.register(server_socket, selectors.EVENT_READ)
 
-try:
-    connection, client_address = server_socket.accept()
-    print(f'I got a connection from {client_address}!')
+while True:
+    events: List[Tuple[SelectorKey, int]] = selector.select(timeout=1)
 
-    buffer = b''
+    if len(events) == 0:
+        print('No events, waiting a bit more!')
 
-    while buffer[-BUFF_SIZE:] != b'\r\n':
-        data = connection.recv(BUFF_SIZE)
-        if not data:
-            break
+    for event, _ in events:
+        event_socket = event.fileobj
+
+        if event_socket == server_socket:  # this means connection attempt
+            connection, address = server_socket.accept()
+            connection.setblocking(False)
+            print(f"I got a connection from {address}")
+            selector.register(connection, selectors.EVENT_READ)
         else:
-            print(f'I got data: {data}!')
-            buffer = buffer + data
-
-    print(f"All the data is: {buffer}")
-finally:
-    server_socket.close()
+            data = event_socket.recv(1024)
+            print(f"I got some data: {data}")
+            event_socket.send(f"echo: {data}\n".encode())
