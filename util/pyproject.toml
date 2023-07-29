@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "utils"
+name = "util"
 version = "1.0"
 description = "simple utils for concurrency book"
 authors = ["tobias <tobias@tobias-leong.dev>"]

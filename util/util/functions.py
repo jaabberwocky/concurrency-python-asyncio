@@ -1,6 +1,7 @@
 import functools
 import time
 from typing import Callable, Any
+import asyncio
 
 
 def async_timed():
@@ -19,3 +20,8 @@ def async_timed():
         return wrapped
 
     return wrapper
+
+
+async def delay(seconds: int) -> None:
+    print(f'delaying {seconds} second(s)')
+    await asyncio.sleep(seconds)
