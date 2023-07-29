@@ -9,7 +9,7 @@ selector = selectors.DefaultSelector()
 server_socket = socket.socket()
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-server_address = ('127.0.0.1', 8000)
+server_address = ("127.0.0.1", 8000)
 server_socket.setblocking(False)
 server_socket.bind(server_address)
 server_socket.listen()
@@ -20,7 +20,7 @@ while True:
     events: List[Tuple[SelectorKey, int]] = selector.select(timeout=1)
 
     if len(events) == 0:
-        print('No events, waiting a bit more!')
+        print("No events, waiting a bit more!")
 
     for event, _ in events:
         event_socket = event.fileobj

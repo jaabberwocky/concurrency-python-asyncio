@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "utils"
+version = "1.0"
+description = "simple utils for concurrency book"
+authors = ["tobias <tobias@tobias-leong.dev>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
