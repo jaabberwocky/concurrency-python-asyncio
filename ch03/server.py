@@ -5,6 +5,8 @@ import logging
 import signal
 from typing import List
 
+echo_tasks = []
+
 
 async def echo(connection: socket,
                loop: AbstractEventLoop) -> None:
@@ -18,8 +20,6 @@ async def echo(connection: socket,
         logging.exception(ex)
     finally:
         connection.close()
-
-echo_tasks = []
 
 
 async def connection_listener(server_socket, loop):
@@ -36,6 +36,7 @@ class GracefulExit(SystemExit):
 
 
 def shutdown():
+    print('Received signal to shutdown...')
     raise GracefulExit()
 
 
