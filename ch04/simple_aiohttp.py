@@ -1,15 +1,13 @@
 import asyncio
 import aiohttp
 from aiohttp import ClientSession
-from util import async_timed
+from util import async_timed, delay_if_url, fetch_status
 
 
 @async_timed()
+@delay_if_url("https://www.youtube.com")
 async def fetch_status(session: ClientSession, url: str) -> int:
     # simulating a very slow request which will be timed-out
-    if url == "https://www.youtube.com":
-        print("sleeping...")
-        await asyncio.sleep(10)
     async with session.get(url) as result:
         return (url, result.status)
 
